@@ -4,13 +4,12 @@ import os
 import shutil
 import time
 import subprocess
-import ctypes
-import pyautogui  # Importamos PyAutoGUI
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import ctypes
 
 router = APIRouter()
 
@@ -83,7 +82,9 @@ async def upload_certificate(certificate: UploadFile = File(...), password: str 
                 EC.presence_of_element_located((By.NAME, "autoriza-C"))
             )
             autoriza_c_button.click()
-            pyautogui.press("enter")
+            time.sleep(2)
+            ctypes.windll.user32.keybd_event(0x0D, 0, 0, 0)
+            ctypes.windll.user32.keybd_event(0x0D, 0, 2, 0) 
             print("Botón 'autoriza-C' presionado correctamente.")
         except Exception as e:
             print(f"Error al presionar el botón 'autoriza-C' o interactuar con el modal: {str(e)}")
